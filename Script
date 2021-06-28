@@ -1,105 +1,117 @@
-create database CementerioBrisas;
-USE [CementerioBrisas]
+create database CementerioBrisass
+USE [CementerioBrisass]
 GO
-/****** Object:  Table [dbo].[asigna_mantenimiento]    Script Date: 12/6/2021 16:23:25 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[asigna_mantenimiento](
+CREATE TABLE [dbo].[asignacion_mantenimiento](
 	[id_asignacion] [int] NOT NULL,
 	[fecha_inicio] [date] NULL,
-	[fecha_cierra] [date] NULL,
-	[cedula_emplpk] [int] NULL,
-	[idtipopk] [int] NULL,
-	[idmantenimientopk] [int] NULL,
- CONSTRAINT [PK_asigna_mantenimiento] PRIMARY KEY CLUSTERED 
+	[fecha_cierre] [date] NULL,
+	[id_empleadopk] [int] NULL,
+	[id_tumbapk] [int] NULL,
+	[id_mantenimientopk] [int] NULL,
+ CONSTRAINT [PK_asignacion_mantenimiento] PRIMARY KEY CLUSTERED 
 (
 	[id_asignacion] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[catg_empleado]    Script Date: 12/6/2021 16:23:25 ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[catg_empleado](
+CREATE TABLE [dbo].[categoria_empleado](
 	[id_categoria] [int] NOT NULL,
-	[descripcion_catg] [varchar](50) NULL
+	[descripcion] [varchar](50) NULL,
+ CONSTRAINT [PK_categoria_empleado] PRIMARY KEY CLUSTERED 
+(
+	[id_categoria] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[certificado_defuncion]    Script Date: 12/6/2021 16:23:25 ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[certificado_defuncion](
-	[idcertificado] [int] NOT NULL,
+	[id_certificado] [int] NOT NULL,
 	[fecha_fallecimiento] [date] NULL,
 	[causa_fallecimiento] [varchar](70) NULL,
-	[idfallecidopk] [int] NULL,
-	[cedulapk] [int] NULL,
+	[id_fallecidopk] [int] NULL,
+	[id_familiarpk] [int] NULL,
  CONSTRAINT [PK_certificado_defuncion] PRIMARY KEY CLUSTERED 
 (
-	[idcertificado] ASC
+	[id_certificado] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[compra_panteon]    Script Date: 12/6/2021 16:23:25 ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[compra_panteon](
 	[id_panteon] [int] NOT NULL,
-	[precio] [decimal](6, 2) NULL
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[compra_panteones]    Script Date: 12/6/2021 16:23:25 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[compra_panteones](
-	[id_panteon] [int] NOT NULL,
 	[precio] [decimal](6, 2) NULL,
-	[idtipopk] [int] NULL,
-	[idsectorpk] [int] NULL,
-	[cedulapk] [int] NULL,
-PRIMARY KEY CLUSTERED 
+	[id_tumbapk] [int] NULL,
+	[id_familiarpk] [int] NULL,
+	[id_tiposectorpk] [int] NULL,
+ CONSTRAINT [PK_compra_panteon] PRIMARY KEY CLUSTERED 
 (
 	[id_panteon] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[empleado]    Script Date: 12/6/2021 16:23:25 ******/
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[detalle_reubicacion](
+	[id_reubicacion] [int] NOT NULL,
+	[fecha_reubicacion] [date] NULL,
+	[precio] [decimal](6, 2) NULL,
+	[id_tumbapk] [int] NULL,
+	[id_tipofpk] [int] NULL,
+ CONSTRAINT [PK_detalle_reubicacion] PRIMARY KEY CLUSTERED 
+(
+	[id_reubicacion] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[empleado](
-	[cedula_empl] [int] NOT NULL,
+	[id_empleado] [int] NOT NULL,
+	[cedula_e] [int] NULL,
 	[nombres_e] [varchar](50) NULL,
 	[apellidos_e] [varchar](50) NULL,
 	[telefono] [int] NULL,
 	[salario] [decimal](6, 2) NULL,
-	[idcategoriapk] [int] NOT NULL,
+	[antiguedad] [varchar](20) NULL,
+	[idcategoriapk] [int] NULL,
  CONSTRAINT [PK_empleado] PRIMARY KEY CLUSTERED 
 (
-	[cedula_empl] ASC
+	[id_empleado] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[fallecido]    Script Date: 12/6/2021 16:23:25 ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[fallecido](
 	[id_fallecido] [int] NOT NULL,
-	[nombresf] [varchar](60) NULL,
-	[apellidosf] [varchar](60) NULL,
+	[nombre] [varchar](50) NULL,
+	[apellido] [varchar](50) NULL,
 	[edad] [int] NULL,
  CONSTRAINT [PK_fallecido] PRIMARY KEY CLUSTERED 
 (
@@ -107,102 +119,120 @@ CREATE TABLE [dbo].[fallecido](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[familiar]    Script Date: 12/6/2021 16:23:25 ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[familiar](
-	[cedula] [int] NOT NULL,
+	[id_familiar] [int] NOT NULL,
+	[cedula] [int] NULL,
 	[nombres] [varchar](50) NULL,
 	[apellidos] [varchar](50) NULL,
-	[direccion] [varchar](50) NULL,
+	[direccion] [varchar](60) NULL,
 	[telefono] [int] NULL,
 	[correo] [varchar](50) NULL,
  CONSTRAINT [PK_familiar] PRIMARY KEY CLUSTERED 
 (
-	[cedula] ASC
+	[id_familiar] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[mantenimiento]    Script Date: 12/6/2021 16:23:25 ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[mantenimiento](
 	[id_mantenimiento] [int] NOT NULL,
-	[descripcion_man] [varchar](60) NULL,
+	[descripcion _mantenimiento] [varchar](70) NULL,
  CONSTRAINT [PK_mantenimiento] PRIMARY KEY CLUSTERED 
 (
 	[id_mantenimiento] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[sector]    Script Date: 12/6/2021 16:23:25 ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[sector](
-	[id_sector] [int] NOT NULL,
-	[descripcion_sec] [varchar](40) NULL,
-	[total_num_tumbas] [int] NULL,
- CONSTRAINT [PK_sector] PRIMARY KEY CLUSTERED 
-(
-	[id_sector] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[servicio]    Script Date: 12/6/2021 16:23:25 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[servicio](
-	[id_servicio] [int] NOT NULL,
-	[tipo_servicio] [varchar](60) NULL,
+CREATE TABLE [dbo].[servicios](
+	[id_servicios] [int] NOT NULL,
+	[tipo_servicio] [varchar](50) NULL,
 	[precio_servicio] [decimal](6, 2) NULL,
- CONSTRAINT [PK_servicio] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_servicios] PRIMARY KEY CLUSTERED 
 (
-	[id_servicio] ASC
+	[id_servicios] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[servicio_prestados]    Script Date: 12/6/2021 16:23:25 ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[servicio_prestados](
-	[id] [int] NOT NULL,
-	[idtipopk] [int] NULL,
-	[idfallecidopk] [int] NULL,
-	[cedula_emplpk] [int] NULL,
-	[idserviciopk] [int] NULL,
-	[descripcion_servicio] [varchar](70) NULL,
+CREATE TABLE [dbo].[servicios_prestados](
+	[id_servicioprestado] [int] NOT NULL,
+	[descripcion_servicio] [varchar](50) NULL,
 	[fecha] [date] NULL,
- CONSTRAINT [PK_servicio_prestados] PRIMARY KEY CLUSTERED 
+	[id_tumbapk] [int] NULL,
+	[id_fallecidopk] [int] NULL,
+	[id_empleadopk] [int] NULL,
+	[id_serviciospk] [int] NULL,
+	[id_tipofpk] [int] NULL,
+ CONSTRAINT [PK_servicios_prestados] PRIMARY KEY CLUSTERED 
 (
-	[id] ASC
+	[id_servicioprestado] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tipo_tumba]    Script Date: 12/6/2021 16:23:25 ******/
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tipo_familiar](
+	[id_tipoF] [int] NOT NULL,
+	[descripcion] [varchar](50) NULL,
+	[id_familiarpk] [int] NULL,
+	[id_fallecidopk] [int] NULL,
+ CONSTRAINT [PK_tipo_familiar] PRIMARY KEY CLUSTERED 
+(
+	[id_tipoF] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tipo_sector](
+	[id_tiposector] [int] NOT NULL,
+	[descripcion_sector] [varchar](70) NULL,
+	[totalNumero_tumbas] [int] NULL,
+ CONSTRAINT [PK_tipo_sector] PRIMARY KEY CLUSTERED 
+(
+	[id_tiposector] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[tipo_tumba](
-	[id_tipo] [int] NOT NULL,
-	[nombre_tumba] [varchar](50) NULL,
+	[id_tipotumba] [int] NOT NULL,
+	[descripcion_tumba] [varchar](60) NULL,
  CONSTRAINT [PK_tipo_tumba] PRIMARY KEY CLUSTERED 
 (
-	[id_tipo] ASC
+	[id_tipotumba] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tumba]    Script Date: 12/6/2021 16:23:25 ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -212,80 +242,115 @@ CREATE TABLE [dbo].[tumba](
 	[capacidad] [varchar](50) NULL,
 	[extension] [varchar](50) NULL,
 	[manzana] [varchar](50) NULL,
-	[idtipopk] [int] NULL,
-	[idsectorpk] [int] NULL,
+	[id_tipotumbapk] [int] NULL,
+	[id_tiposectorpk] [int] NULL,
  CONSTRAINT [PK_tumba] PRIMARY KEY CLUSTERED 
 (
 	[id_tumba] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-INSERT [dbo].[asigna_mantenimiento] ([id_asignacion], [fecha_inicio], [fecha_cierra], [cedula_emplpk], [idtipopk], [idmantenimientopk]) VALUES (1, CAST(N'2019-03-22' AS Date), CAST(N'2019-04-22' AS Date), 2123456, 1, 3)
-INSERT [dbo].[asigna_mantenimiento] ([id_asignacion], [fecha_inicio], [fecha_cierra], [cedula_emplpk], [idtipopk], [idmantenimientopk]) VALUES (2, CAST(N'2019-01-23' AS Date), CAST(N'2019-04-22' AS Date), 21203458, 2, 1)
+ALTER TABLE [dbo].[asignacion_mantenimiento]  WITH CHECK ADD  CONSTRAINT [FK_asignacion_mantenimiento_empleado] FOREIGN KEY([id_empleadopk])
+REFERENCES [dbo].[empleado] ([id_empleado])
 GO
-INSERT [dbo].[catg_empleado] ([id_categoria], [descripcion_catg]) VALUES (1, N'Administradores')
-INSERT [dbo].[catg_empleado] ([id_categoria], [descripcion_catg]) VALUES (2, N'Jardineros')
-INSERT [dbo].[catg_empleado] ([id_categoria], [descripcion_catg]) VALUES (3, N'Mantenimiento')
-INSERT [dbo].[catg_empleado] ([id_categoria], [descripcion_catg]) VALUES (4, N'Enterradores')
+ALTER TABLE [dbo].[asignacion_mantenimiento] CHECK CONSTRAINT [FK_asignacion_mantenimiento_empleado]
 GO
-INSERT [dbo].[certificado_defuncion] ([idcertificado], [fecha_fallecimiento], [causa_fallecimiento], [idfallecidopk], [cedulapk]) VALUES (1, CAST(N'2019-03-22' AS Date), N'Covid-19', 123456, 2123456)
-INSERT [dbo].[certificado_defuncion] ([idcertificado], [fecha_fallecimiento], [causa_fallecimiento], [idfallecidopk], [cedulapk]) VALUES (2, CAST(N'2019-01-23' AS Date), N'Covid-19', 123457, 2123457)
-INSERT [dbo].[certificado_defuncion] ([idcertificado], [fecha_fallecimiento], [causa_fallecimiento], [idfallecidopk], [cedulapk]) VALUES (3, CAST(N'2019-01-25' AS Date), N'Accidente', 123459, 2123459)
-INSERT [dbo].[certificado_defuncion] ([idcertificado], [fecha_fallecimiento], [causa_fallecimiento], [idfallecidopk], [cedulapk]) VALUES (4, CAST(N'2019-06-28' AS Date), N'De un susto', 123458, 2123458)
+ALTER TABLE [dbo].[asignacion_mantenimiento]  WITH CHECK ADD  CONSTRAINT [FK_asignacion_mantenimiento_mantenimiento] FOREIGN KEY([id_mantenimientopk])
+REFERENCES [dbo].[mantenimiento] ([id_mantenimiento])
 GO
-INSERT [dbo].[compra_panteones] ([id_panteon], [precio], [idtipopk], [idsectorpk], [cedulapk]) VALUES (1, CAST(302.00 AS Decimal(6, 2)), 2, 1, 2123456)
-INSERT [dbo].[compra_panteones] ([id_panteon], [precio], [idtipopk], [idsectorpk], [cedulapk]) VALUES (2, CAST(209.00 AS Decimal(6, 2)), 2, 2, 2123456)
-INSERT [dbo].[compra_panteones] ([id_panteon], [precio], [idtipopk], [idsectorpk], [cedulapk]) VALUES (3, CAST(150.00 AS Decimal(6, 2)), 2, 1, 2123456)
-INSERT [dbo].[compra_panteones] ([id_panteon], [precio], [idtipopk], [idsectorpk], [cedulapk]) VALUES (4, CAST(200.00 AS Decimal(6, 2)), 2, 2, 2123456)
-INSERT [dbo].[compra_panteones] ([id_panteon], [precio], [idtipopk], [idsectorpk], [cedulapk]) VALUES (5, CAST(209.00 AS Decimal(6, 2)), 1, 2, 2123459)
-INSERT [dbo].[compra_panteones] ([id_panteon], [precio], [idtipopk], [idsectorpk], [cedulapk]) VALUES (6, CAST(250.00 AS Decimal(6, 2)), 3, 3, 2123459)
-INSERT [dbo].[compra_panteones] ([id_panteon], [precio], [idtipopk], [idsectorpk], [cedulapk]) VALUES (8, CAST(150.00 AS Decimal(6, 2)), 1, 1, 2123456)
-INSERT [dbo].[compra_panteones] ([id_panteon], [precio], [idtipopk], [idsectorpk], [cedulapk]) VALUES (9, CAST(200.00 AS Decimal(6, 2)), 3, 2, 2123456)
+ALTER TABLE [dbo].[asignacion_mantenimiento] CHECK CONSTRAINT [FK_asignacion_mantenimiento_mantenimiento]
 GO
-INSERT [dbo].[empleado] ([cedula_empl], [nombres_e], [apellidos_e], [telefono], [salario], [idcategoriapk]) VALUES (2123456, N'Anahi', N'Macias', 991919, CAST(400.00 AS Decimal(6, 2)), 1)
-INSERT [dbo].[empleado] ([cedula_empl], [nombres_e], [apellidos_e], [telefono], [salario], [idcategoriapk]) VALUES (13123456, N'Mieguel', N'Macias', 891919, CAST(550.00 AS Decimal(6, 2)), 4)
-INSERT [dbo].[empleado] ([cedula_empl], [nombres_e], [apellidos_e], [telefono], [salario], [idcategoriapk]) VALUES (20123457, N'Erika', N'gomez', 918830, CAST(450.00 AS Decimal(6, 2)), 2)
-INSERT [dbo].[empleado] ([cedula_empl], [nombres_e], [apellidos_e], [telefono], [salario], [idcategoriapk]) VALUES (21023459, N'juan', N'lopez', 11128, CAST(500.00 AS Decimal(6, 2)), 3)
-INSERT [dbo].[empleado] ([cedula_empl], [nombres_e], [apellidos_e], [telefono], [salario], [idcategoriapk]) VALUES (21203458, N'Leo', N'macias', 999933, CAST(510.00 AS Decimal(6, 2)), 4)
-INSERT [dbo].[empleado] ([cedula_empl], [nombres_e], [apellidos_e], [telefono], [salario], [idcategoriapk]) VALUES (32012345, N'Erick', N'gomez', 818830, CAST(500.00 AS Decimal(6, 2)), 3)
+ALTER TABLE [dbo].[asignacion_mantenimiento]  WITH CHECK ADD  CONSTRAINT [FK_asignacion_mantenimiento_tumba] FOREIGN KEY([id_tumbapk])
+REFERENCES [dbo].[tumba] ([id_tumba])
 GO
-INSERT [dbo].[fallecido] ([id_fallecido], [nombresf], [apellidosf], [edad]) VALUES (123456, N'dayana', N'Macias', 70)
-INSERT [dbo].[fallecido] ([id_fallecido], [nombresf], [apellidosf], [edad]) VALUES (123457, N'carlos', N'gomez', 30)
-INSERT [dbo].[fallecido] ([id_fallecido], [nombresf], [apellidosf], [edad]) VALUES (123458, N'alexander', N'macias', 33)
-INSERT [dbo].[fallecido] ([id_fallecido], [nombresf], [apellidosf], [edad]) VALUES (123459, N'edison', N'lopez', 28)
+ALTER TABLE [dbo].[asignacion_mantenimiento] CHECK CONSTRAINT [FK_asignacion_mantenimiento_tumba]
 GO
-INSERT [dbo].[familiar] ([cedula], [nombres], [apellidos], [direccion], [telefono], [correo]) VALUES (2123456, N'Maria', N'Macias', N'barrio jokay', 991919, N'maria@gmail.com')
-INSERT [dbo].[familiar] ([cedula], [nombres], [apellidos], [direccion], [telefono], [correo]) VALUES (2123457, N'jose', N'gomez', N'calle 13', 918830, N'jose@gmail.com')
-INSERT [dbo].[familiar] ([cedula], [nombres], [apellidos], [direccion], [telefono], [correo]) VALUES (2123458, N'diego', N'macias', N'san pedro', 999933, N'diego@gmail.com')
-INSERT [dbo].[familiar] ([cedula], [nombres], [apellidos], [direccion], [telefono], [correo]) VALUES (2123459, N'juan', N'lopez', N'flavio reyes', 11128, N'juan@gmail.com')
+ALTER TABLE [dbo].[certificado_defuncion]  WITH CHECK ADD  CONSTRAINT [FK_certificado_defuncion_fallecido] FOREIGN KEY([id_fallecidopk])
+REFERENCES [dbo].[fallecido] ([id_fallecido])
 GO
-INSERT [dbo].[mantenimiento] ([id_mantenimiento], [descripcion_man]) VALUES (1, N'pintura')
-INSERT [dbo].[mantenimiento] ([id_mantenimiento], [descripcion_man]) VALUES (2, N'limpieza de lapidas')
-INSERT [dbo].[mantenimiento] ([id_mantenimiento], [descripcion_man]) VALUES (3, N'liempeza de maleza')
+ALTER TABLE [dbo].[certificado_defuncion] CHECK CONSTRAINT [FK_certificado_defuncion_fallecido]
 GO
-INSERT [dbo].[sector] ([id_sector], [descripcion_sec], [total_num_tumbas]) VALUES (1, N'sector 1', 200)
-INSERT [dbo].[sector] ([id_sector], [descripcion_sec], [total_num_tumbas]) VALUES (2, N'Sector 2', 300)
-INSERT [dbo].[sector] ([id_sector], [descripcion_sec], [total_num_tumbas]) VALUES (3, N'Sector 3', 350)
-INSERT [dbo].[sector] ([id_sector], [descripcion_sec], [total_num_tumbas]) VALUES (4, N'Sector 4', 360)
+ALTER TABLE [dbo].[certificado_defuncion]  WITH CHECK ADD  CONSTRAINT [FK_certificado_defuncion_familiar] FOREIGN KEY([id_familiarpk])
+REFERENCES [dbo].[familiar] ([id_familiar])
 GO
-INSERT [dbo].[servicio] ([id_servicio], [tipo_servicio], [precio_servicio]) VALUES (1, N'Exhumacion', CAST(80.00 AS Decimal(6, 2)))
-INSERT [dbo].[servicio] ([id_servicio], [tipo_servicio], [precio_servicio]) VALUES (2, N'Reubicacion', CAST(120.00 AS Decimal(6, 2)))
-INSERT [dbo].[servicio] ([id_servicio], [tipo_servicio], [precio_servicio]) VALUES (3, N'Inhumacion', CAST(200.00 AS Decimal(6, 2)))
-INSERT [dbo].[servicio] ([id_servicio], [tipo_servicio], [precio_servicio]) VALUES (4, N'Entierros', CAST(80.00 AS Decimal(6, 2)))
+ALTER TABLE [dbo].[certificado_defuncion] CHECK CONSTRAINT [FK_certificado_defuncion_familiar]
 GO
-INSERT [dbo].[servicio_prestados] ([id], [idtipopk], [idfallecidopk], [cedula_emplpk], [idserviciopk], [descripcion_servicio], [fecha]) VALUES (1, 1, 123459, 21203458, 1, N'ninguno', CAST(N'2019-06-02' AS Date))
-INSERT [dbo].[servicio_prestados] ([id], [idtipopk], [idfallecidopk], [cedula_emplpk], [idserviciopk], [descripcion_servicio], [fecha]) VALUES (2, 1, 123456, 21203458, 1, N'ninguno', CAST(N'2019-06-08' AS Date))
-INSERT [dbo].[servicio_prestados] ([id], [idtipopk], [idfallecidopk], [cedula_emplpk], [idserviciopk], [descripcion_servicio], [fecha]) VALUES (3, 2, 123457, 21203458, 1, N'nunguno', CAST(N'2019-06-10' AS Date))
-INSERT [dbo].[servicio_prestados] ([id], [idtipopk], [idfallecidopk], [cedula_emplpk], [idserviciopk], [descripcion_servicio], [fecha]) VALUES (4, 3, 123458, 13123456, 1, N'ninguno', CAST(N'2019-06-10' AS Date))
-INSERT [dbo].[servicio_prestados] ([id], [idtipopk], [idfallecidopk], [cedula_emplpk], [idserviciopk], [descripcion_servicio], [fecha]) VALUES (5, 1, 123459, 21203458, 4, N'ninguno', CAST(N'2019-06-03' AS Date))
-INSERT [dbo].[servicio_prestados] ([id], [idtipopk], [idfallecidopk], [cedula_emplpk], [idserviciopk], [descripcion_servicio], [fecha]) VALUES (6, 1, 123456, 21203458, 4, N'ninguno', CAST(N'2019-06-09' AS Date))
-INSERT [dbo].[servicio_prestados] ([id], [idtipopk], [idfallecidopk], [cedula_emplpk], [idserviciopk], [descripcion_servicio], [fecha]) VALUES (7, 2, 123457, 21203458, 4, N'nunguno', CAST(N'2019-06-11' AS Date))
-INSERT [dbo].[servicio_prestados] ([id], [idtipopk], [idfallecidopk], [cedula_emplpk], [idserviciopk], [descripcion_servicio], [fecha]) VALUES (8, 3, 123458, 13123456, 4, N'ninguno', CAST(N'2019-06-11' AS Date))
+ALTER TABLE [dbo].[compra_panteon]  WITH CHECK ADD  CONSTRAINT [FK_compra_panteon_familiar] FOREIGN KEY([id_familiarpk])
+REFERENCES [dbo].[familiar] ([id_familiar])
 GO
-INSERT [dbo].[tipo_tumba] ([id_tipo], [nombre_tumba]) VALUES (1, N'nicho')
-INSERT [dbo].[tipo_tumba] ([id_tipo], [nombre_tumba]) VALUES (2, N'panteon')
-INSERT [dbo].[tipo_tumba] ([id_tipo], [nombre_tumba]) VALUES (3, N'fosa comun')
+ALTER TABLE [dbo].[compra_panteon] CHECK CONSTRAINT [FK_compra_panteon_familiar]
 GO
+ALTER TABLE [dbo].[compra_panteon]  WITH CHECK ADD  CONSTRAINT [FK_compra_panteon_tipo_sector] FOREIGN KEY([id_tiposectorpk])
+REFERENCES [dbo].[tipo_sector] ([id_tiposector])
+GO
+ALTER TABLE [dbo].[compra_panteon] CHECK CONSTRAINT [FK_compra_panteon_tipo_sector]
+GO
+ALTER TABLE [dbo].[compra_panteon]  WITH CHECK ADD  CONSTRAINT [FK_compra_panteon_tumba] FOREIGN KEY([id_tumbapk])
+REFERENCES [dbo].[tumba] ([id_tumba])
+GO
+ALTER TABLE [dbo].[compra_panteon] CHECK CONSTRAINT [FK_compra_panteon_tumba]
+GO
+ALTER TABLE [dbo].[detalle_reubicacion]  WITH CHECK ADD  CONSTRAINT [FK_detalle_reubicacion_tipo_familiar] FOREIGN KEY([id_tipofpk])
+REFERENCES [dbo].[tipo_familiar] ([id_tipoF])
+GO
+ALTER TABLE [dbo].[detalle_reubicacion] CHECK CONSTRAINT [FK_detalle_reubicacion_tipo_familiar]
+GO
+ALTER TABLE [dbo].[detalle_reubicacion]  WITH CHECK ADD  CONSTRAINT [FK_detalle_reubicacion_tumba] FOREIGN KEY([id_tumbapk])
+REFERENCES [dbo].[tumba] ([id_tumba])
+GO
+ALTER TABLE [dbo].[detalle_reubicacion] CHECK CONSTRAINT [FK_detalle_reubicacion_tumba]
+GO
+ALTER TABLE [dbo].[empleado]  WITH CHECK ADD  CONSTRAINT [FK_empleado_categoria_empleado] FOREIGN KEY([idcategoriapk])
+REFERENCES [dbo].[categoria_empleado] ([id_categoria])
+GO
+ALTER TABLE [dbo].[empleado] CHECK CONSTRAINT [FK_empleado_categoria_empleado]
+GO
+ALTER TABLE [dbo].[servicios_prestados]  WITH CHECK ADD  CONSTRAINT [FK_servicios_prestados_empleado] FOREIGN KEY([id_empleadopk])
+REFERENCES [dbo].[empleado] ([id_empleado])
+GO
+ALTER TABLE [dbo].[servicios_prestados] CHECK CONSTRAINT [FK_servicios_prestados_empleado]
+GO
+ALTER TABLE [dbo].[servicios_prestados]  WITH CHECK ADD  CONSTRAINT [FK_servicios_prestados_fallecido] FOREIGN KEY([id_fallecidopk])
+REFERENCES [dbo].[fallecido] ([id_fallecido])
+GO
+ALTER TABLE [dbo].[servicios_prestados] CHECK CONSTRAINT [FK_servicios_prestados_fallecido]
+GO
+ALTER TABLE [dbo].[servicios_prestados]  WITH CHECK ADD  CONSTRAINT [FK_servicios_prestados_servicios] FOREIGN KEY([id_serviciospk])
+REFERENCES [dbo].[servicios] ([id_servicios])
+GO
+ALTER TABLE [dbo].[servicios_prestados] CHECK CONSTRAINT [FK_servicios_prestados_servicios]
+GO
+ALTER TABLE [dbo].[servicios_prestados]  WITH CHECK ADD  CONSTRAINT [FK_servicios_prestados_tipo_familiar] FOREIGN KEY([id_tipofpk])
+REFERENCES [dbo].[tipo_familiar] ([id_tipoF])
+GO
+ALTER TABLE [dbo].[servicios_prestados] CHECK CONSTRAINT [FK_servicios_prestados_tipo_familiar]
+GO
+ALTER TABLE [dbo].[servicios_prestados]  WITH CHECK ADD  CONSTRAINT [FK_servicios_prestados_tumba] FOREIGN KEY([id_tumbapk])
+REFERENCES [dbo].[tumba] ([id_tumba])
+GO
+ALTER TABLE [dbo].[servicios_prestados] CHECK CONSTRAINT [FK_servicios_prestados_tumba]
+GO
+ALTER TABLE [dbo].[tipo_familiar]  WITH CHECK ADD  CONSTRAINT [FK_tipo_familiar_fallecido] FOREIGN KEY([id_fallecidopk])
+REFERENCES [dbo].[fallecido] ([id_fallecido])
+GO
+ALTER TABLE [dbo].[tipo_familiar] CHECK CONSTRAINT [FK_tipo_familiar_fallecido]
+GO
+ALTER TABLE [dbo].[tipo_familiar]  WITH CHECK ADD  CONSTRAINT [FK_tipo_familiar_familiar] FOREIGN KEY([id_familiarpk])
+REFERENCES [dbo].[familiar] ([id_familiar])
+GO
+ALTER TABLE [dbo].[tipo_familiar] CHECK CONSTRAINT [FK_tipo_familiar_familiar]
+GO
+ALTER TABLE [dbo].[tumba]  WITH CHECK ADD  CONSTRAINT [FK_tumba_tipo_sector] FOREIGN KEY([id_tiposectorpk])
+REFERENCES [dbo].[tipo_sector] ([id_tiposector])
+GO
+ALTER TABLE [dbo].[tumba] CHECK CONSTRAINT [FK_tumba_tipo_sector]
+GO
+ALTER TABLE [dbo].[tumba]  WITH CHECK ADD  CONSTRAINT [FK_tumba_tipo_tumba] FOREIGN KEY([id_tipotumbapk])
+REFERENCES [dbo].[tipo_tumba] ([id_tipotumba])
+GO
+ALTER TABLE [dbo].[tumba] CHECK CONSTRAINT [FK_tumba_tipo_tumba]
+GO
+
 
 -- Consultas 1: Un empleado en cuantas exhumaciones ha estado --
 	select f.nombresf as nombre_fallecido, e.tipo_servicio, e.precio_servicio, o.nombres_e as empleado, s.fecha
