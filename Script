@@ -422,15 +422,16 @@ INSERT [dbo].[servicios_prestados] ([id_servicioprestado], [id_tumbapk], [id_fal
 INSERT [dbo].[servicios_prestados] ([id_servicioprestado], [id_tumbapk], [id_fallecidopk], [id_empleadopk], [id_serviciospk], [descripcion_servicio], [fecha],[id_tipofpk]) VALUES (804, 3, 123459, 4, 1, N'ninguno', CAST(N'2019-06-10' AS Date),1234567)
 
 
---Consultas 1: Un empleado en cuantas exhumaciones ha estado --
-	select f.nombre as nombre_fallecido, e.tipo_servicio, e.precio_servicio, o.nombres_e as empleado, s.fecha
-	from servicios_prestados s 
-	inner join  servicios e on s.id_servicioprestado=e.id_servicios 
-	inner join empleado o  on o.id_empleado= s.id_empleadopk 
-	inner join fallecido f on f.id_fallecido= s.id_fallecidopk where id_servicios=1 and  nombres_e= 'leo'
-	select count(tipo_servicio ) as total_Exhumaciones from servicios_prestados s 
-	inner join servicios on id_servicios=s.id_servicioprestado 
-	inner join empleado on id_empleado=s.id_empleadopk where nombres_e= 'leo' and id_servicios=1
+Consultas 1: Un empleado en cuantas exhumaciones ha estado --
+select  f.nombre as nombre_fallecido,
+e.tipo_servicio, e.precio_servicio ,o.nombres_e as empleado, s.fecha
+from servicios_prestados s inner join  servicios e
+on  s.id_serviciospk=e.id_servicios inner join empleado o  on o.id_empleado= s.id_empleadopk 
+inner join fallecido f on f.id_fallecido= s.id_fallecidopk where id_servicios=1 and  nombres_e= 'Anahi'
+select    count(tipo_servicio ) as total_Exhumaciones from servicios_prestados s 
+inner join servicios on id_servicios=s.id_serviciospk inner join
+empleado on id_empleado=s.id_empleadopk where nombres_e= 'Anahi' and id_servicios=1
+
 
 -- Consulta 2: Numero de tipo de tramites que se ha emitido en el cementerio --
 	select  tipo_servicio
