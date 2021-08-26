@@ -1,0 +1,50 @@
+create  or alter trigger tr_anulacion2 on asignacion_mantenimiento
+
+for insert
+as 
+declare @id_tecnico varchar(10)
+if exists (select id_empleadopk from asignacion_mantenimiento inner join tumba t
+on id_tumba=id_tumbapk join empleado e on id_empleado=id_empleadopk  
+where   t.manzana='a'
+and id_empleado>1 )
+
+begin
+print 'No se puede Asignar un empleado dos veces a un empleado en la misma manzana'
+rollback
+end
+--------------------------
+Cursor que muestre por intervalo de edad cuantos enterrados hay
+declare  @TotalFallecido_0_8 char(12),@Edades18_24 char(22),@Edades25_80  char(70)
+
+declare cursor8 cursor 
+
+for SELECT SUM(CASE WHEN edad < 18 THEN 1 ELSE 0 END) AS TotalFallecido_0_8,
+        SUM(CASE WHEN edad BETWEEN 18 AND 24 THEN 1 ELSE 0 END) AS [Edades18-24],
+        SUM(CASE WHEN edad BETWEEN 25 AND 80 THEN 1 ELSE 0 END) AS [Edades25-80]
+ FROM servicios_prestados join fallecido on id_fallecido=id_fallecidopk 
+				
+				
+open cursor8
+fetch cursor8 into  @TotalFallecido_0_8 ,@Edades18_24 ,@Edades25_80  
+print '  TotalFallecidos-1-a-18_años ,     TotalFallecidos-18-a-24_años ,         TotalFallecidos-24-a-80_años   '
+print'----------------------------------------------------------------------------------------------------------'
+while @@FETCH_STATUS=0
+begin
+	print @TotalFallecido_0_8 +space(30)+@Edades18_24 +space(30)+@Edades25_80 
+	fetch cursor8 into  @TotalFallecido_0_8 ,@Edades18_24 ,@Edades25_80   
+	end
+
+	close cursor8
+---------------------------
+Create or alter procedure servicios4
+@marca varchar(50) as
+select nombre,edad,fecha_fallecimiento,n.causa_fallecimiento from certificado_defuncion n
+inner join fallecido on n.id_fallecidopk = id_fallecido
+where n.causa_fallecimiento=@marca order by n.fecha_fallecimiento desc go
+exec servicios4 'Covid-19'
+
+Irreport  que muestre por intervalo de edad cuantos enterrados hay por diagrama de barras
+SELECT s.id_tumbapk,SUM(CASE WHEN edad < 18 THEN 1 ELSE 0 END) AS TotalFallecido_0_8,
+        SUM(CASE WHEN edad BETWEEN 18 AND 24 THEN 1 ELSE 0 END) AS [Edades18-24],
+        SUM(CASE WHEN edad BETWEEN 25 AND 80 THEN 1 ELSE 0 END) AS [Edades25-80]
+ FROM servicios_prestados s join fallecido f on id_fallecido=id_fallecidopk  group by s.id_tumbapk
