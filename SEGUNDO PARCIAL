@@ -1,17 +1,30 @@
-create  or alter trigger tr_anulacion2 on asignacion_mantenimiento
-
-for insert
+create or alter trigger Tgr_Tumbasinsert
+on tumba  --tabla a la cual se desea asignar el trigger
+for insert -- FOR INSERT especifica que es un trigger que se lanza o ejecuta después de insertar
 as 
-declare @id_tecnico varchar(10)
-if exists (select id_empleadopk from asignacion_mantenimiento inner join tumba t
-on id_tumba=id_tumbapk join empleado e on id_empleado=id_empleadopk  
-where   t.manzana='a'
-and id_empleado>1 )
-
-begin
-print 'No se puede Asignar un empleado dos veces a un empleado en la misma manzana'
-rollback
-end
+--declaramos las variables 
+declare @id_tumba int
+declare @capacidad varchar(50)
+--Asignar variables
+set @id_tumba = ( select id_tumba from inserted )
+set  @capacidad = (select capacidad from inserted )
+if @capacidad ='Para 5 personas'
+--Dependiendo de la condicion ; realize la insercion
+insert into tipo_tumba values (@id_tumba,'nicho')
+update tumba set id_tipotumbapk=@id_tumba
+if @capacidad ='Para 6 personas'
+insert into tipo_tumba values (@id_tumba,'panteon')
+update tumba set id_tipotumbapk=@id_tumba
+if @capacidad ='Para 7 personas'
+insert into tipo_tumba values (@id_tumba,'Fosa Comun')
+update tumba set id_tipotumbapk=@id_tumba
+if @capacidad =''
+insert into tipo_tumba values (@id_tumba,'Sin Descripcion')
+update tumba set id_tipotumbapk=@id_tumba
+if @capacidad ='Para 1 a 4 persona'
+insert into tipo_tumba values (@id_tumba,'Otros')
+update tumba set id_tipotumbapk=@id_tumba
+go
 --------------------------
 Cursor que muestre por intervalo de edad cuantos enterrados hay
 declare  @TotalFallecido_0_8 char(12),@Edades18_24 char(22),@Edades25_80  char(70)
